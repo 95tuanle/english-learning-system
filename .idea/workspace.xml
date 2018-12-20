@@ -10,7 +10,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
@@ -19,7 +19,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -34,6 +34,9 @@
     <findStrings>
       <find>logo</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -53,6 +56,7 @@
     <option name="width" value="1629" />
     <option name="height" value="1027" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -166,12 +170,12 @@
       <workItem from="1545307219466" duration="388000" />
       <workItem from="1545307677362" duration="255000" />
       <workItem from="1545308029151" duration="2887000" />
-      <workItem from="1545311434982" duration="223000" />
+      <workItem from="1545311434982" duration="565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14206000" />
+    <option name="totallyTimeSpent" value="14520000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -184,7 +188,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24420024" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
