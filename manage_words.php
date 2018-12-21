@@ -31,7 +31,7 @@ session_start();
         <li class="nav-item">
             <a class="nav-link" href="add_a_word.php">Add word</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
         <li class="nav-item">
@@ -40,12 +40,35 @@ session_start();
     </ul>
 </nav>
 <br>
-<div class="container">
-    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>
-    <h1>Lecturer: Nguyen Ngoc Thanh</h1>
-    <br>
-    <p>Student name: Le Nguyen Anh Tuan</p>
-    <p>Student ID: s3574983</p>
+<div class="container text-dark">
+    <h2>Words</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Word</th>
+            <th>Vietnamese meaning</th>
+            <th>Similar words</th>
+            <th>Example 1</th>
+            <th>Example 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $dataAsArray;
+//        for ($position = 0; $position < count($dataAsArray); $position++) {
+//            $fields = explode(",", $dataAsArray[$position]);
+//            echo "<tr>";
+//            echo "<td>$fields[0]</td>";
+//            echo "<td>$fields[1]</td>";
+//            echo "<td>$fields[2]</td>";
+//            echo "<td>$fields[3]</td>";
+//            echo "<td>$fields[4]</td>";
+//            echo "<td><a type='button' class='btn btn-warning text-dark' href='update_a_word.php?position=$position'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_a_word_action.php?position=$position'>Delete</a></td>";
+//            echo "</tr>";
+//        }
+        ?>
+        </tbody>
+    </table>
 </div>
 <br>
 <footer class="page-footer font-small lighten-5"">

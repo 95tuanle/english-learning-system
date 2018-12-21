@@ -40,13 +40,13 @@ session_start();
     </ul>
 </nav>
 <br>
-<div class="container">
-    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>
-    <h1>Lecturer: Nguyen Ngoc Thanh</h1>
-    <br>
-    <p>Student name: Le Nguyen Anh Tuan</p>
-    <p>Student ID: s3574983</p>
-</div>
+<!--<div class="container">-->
+<!--    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>-->
+<!--    <h1>Lecturer: Nguyen Ngoc Thanh</h1>-->
+<!--    <br>-->
+<!--    <p>Student name: Le Nguyen Anh Tuan</p>-->
+<!--    <p>Student ID: s3574983</p>-->
+<!--</div>-->
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
