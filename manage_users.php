@@ -58,16 +58,28 @@ session_start();
         </thead>
         <tbody>
         <?php
-        $dataAsArray;
-        //        for ($position = 0; $position < count($dataAsArray); $position++) {
-        //            $fields = explode(",", $dataAsArray[$position]);
-        //            echo "<tr>";
-        //            echo "<td>$fields[0]</td>";
-        //            echo "<td>$fields[1]</td>";
-        //            echo "<td>$fields[2]</td>";
-        //            echo "<td><a type='button' class='btn btn-warning text-dark' href='update_an_user.php?position=$position'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_an_user_action.php?position=$position'>Delete</a></td>";
-        //            echo "</tr>";
-        //        }
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $sql = "SELECT * FROM users";
+        $data = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($data) > 0) {
+            while($row = mysqli_fetch_assoc($data)) {
+                $id = $row["id"];
+                $username = $row["username"];
+                $email = $row["email"];
+                $is_admin = $row["is_admin"];
+                echo "<tr>";
+                echo "<td>$username</td>";
+                echo "<td>$email</td>";
+                echo "<td>$is_admin</td>";
+                echo "<td><a type='button' class='btn btn-warning text-dark' href='update_an_user.php?id=$id'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_an_user_action.php?id=$id'>Delete</a></td>";
+                echo "</tr>";
+            }
+        }
+        mysqli_close($conn);
         ?>
         </tbody>
     </table>

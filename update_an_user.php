@@ -1,5 +1,80 @@
 <?php
 session_start();
+
+$username_Err = $email_Err = $is_admin_Err = $password_Err = $confirm_password_Err = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $count = 0;
+    if (empty($_POST["username"])) {
+        $username_Err = "Username is required";
+        $_SESSION['username'] = $_POST['username'];
+    } else {
+        $count += 1;
+        $_SESSION['username'] = $_POST['username'];
+    }
+    if (empty($_POST["email"])) {
+        $email_Err = "Email is required";
+        $_SESSION['email'] = $_POST['email'];
+    } else {
+        $count += 1;
+        $_SESSION['email'] = $_POST['email'];
+    }
+    if (empty($_POST["is_admin"])) {
+        $is_admin_Err = "Is admin are required";
+        $_SESSION['is_admin'] = $_POST['is_admin'];
+    } else {
+        $count += 1;
+        $_SESSION['is_admin'] = $_POST['is_admin'];
+    }
+    if (empty($_POST["password"])) {
+        $password_Err = "Password is required";
+        $_SESSION['password'] = $_POST['password'];
+    } else {
+        $count += 1;
+        $_SESSION['password'] = $_POST['password'];
+    }
+    if (empty($_POST["confirm_password"])) {
+        $confirm_password_Err = "Confirm password is required";
+        $_SESSION['confirm_password'] = $_POST['confirm_password'];
+    } else {
+        if ($_POST["confirm_password"] != $_POST["password"]) {
+            $confirm_password_Err = "Confirm password does not match";
+        } else {
+            $count += 1;
+        }
+        $count += 1;
+        $_SESSION['confirm_password'] = $_POST['confirm_password'];
+    }
+    if ($count == 6) {
+        $options = [
+            'cost' => 12,
+        ];
+        $_SESSION['password'] = password_hash($_SESSION['password'], PASSWORD_BCRYPT, $options);
+        header("Location: actions/update_an_user_action.php");
+    }
+}
+if($_GET['id'] != null) {
+    $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "SELECT * FROM users WHERE id='".$_GET['id']."'";
+    $data = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($data) > 0) {
+        $row = mysqli_fetch_assoc($data);
+        $_SESSION['id'] = $_GET['id'];
+        $_SESSION["username"] = $_POST["username"] =  $row["username"];
+        $_SESSION["email"] = $_POST["email"] = $row["email"];
+        $_SESSION["is_admin"] = $_POST["is_admin"] = $row["is_admin"];
+    }
+    mysqli_close($conn);
+} else {
+    $_POST["username"] = $_SESSION["username"];
+    $_POST["email"] = $_SESSION["email"];
+    $_POST["is_admin"] = $_SESSION["is_admin"];
+    $_POST["password"] = $_SESSION["password"];
+    $_POST["confirm_password"] = $_SESSION["confirm_password"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +121,34 @@ session_start();
     </ul>
 </nav>
 <br>
-<!--<div class="container">-->
-<!--    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>-->
-<!--    <h1>Lecturer: Nguyen Ngoc Thanh</h1>-->
-<!--    <br>-->
-<!--    <p>Student name: Le Nguyen Anh Tuan</p>-->
-<!--    <p>Student ID: s3574983</p>-->
-<!--</div>-->
+<div class="container-fluid">
+    <form action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> " method="post">
+        <div class="form-group">
+            <input placeholder="Username" class="form-control" type="text" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : '' ?>">
+            <span class="error">* <?php echo $username_Err;?></span>
+        </div>
+        <div class="form-group">
+            <input placeholder="Email" class="form-control" type="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
+            <span class="error">* <?php echo $email_Err;?></span>
+        </div>
+        <div class="form-check">
+            <input type="radio" name="is_admin" value="admin" <?php if ($_POST['is_admin']=="admin") {echo "checked";} ?> id="admin">
+            <label for="admin">Admin</label>
+            <input type="radio" name="is_admin" value="learner" <?php if ($_POST['is_admin']=="learner") {echo "checked";} ?> id="learner">
+            <label for="learner">Learner</label>
+            <span class="error">* <?php echo $is_admin_Err;?></span>
+        </div>
+        <div class="form-group">
+            <input placeholder="Password" class="form-control" type="password" name="password" value="<?php echo isset($_POST['password']) ? $_POST['password'] : '' ?>">
+            <span class="error">* <?php echo $password_Err;?></span>
+        </div>
+        <div class="form-group">
+            <input placeholder="Confirm password" class="form-control" type="password" name="confirm_password" value="<?php echo isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '' ?>">
+            <span class="error">* <?php echo $confirm_password_Err;?></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">

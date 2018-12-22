@@ -60,18 +60,32 @@ session_start();
         </thead>
         <tbody>
         <?php
-        $dataAsArray;
-//        for ($position = 0; $position < count($dataAsArray); $position++) {
-//            $fields = explode(",", $dataAsArray[$position]);
-//            echo "<tr>";
-//            echo "<td>$fields[0]</td>";
-//            echo "<td>$fields[1]</td>";
-//            echo "<td>$fields[2]</td>";
-//            echo "<td>$fields[3]</td>";
-//            echo "<td>$fields[4]</td>";
-//            echo "<td><a type='button' class='btn btn-warning text-dark' href='update_a_word.php?position=$position'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_a_word_action.php?position=$position'>Delete</a></td>";
-//            echo "</tr>";
-//        }
+            $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            $sql = "SELECT * FROM words";
+            $data = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($data) > 0) {
+                while($row = mysqli_fetch_assoc($data)) {
+                    $id = $row["id"];
+                    $word = $row["word"];
+                    $vietnamese_meaning = $row["vietnamese_meaning"];
+                    $similar_words = $row["similar_words"];
+                    $example_one = $row["example_one"];
+                    $example_two = $row["example_two"];
+                    echo "<tr>";
+                    echo "<td>$word</td>";
+                    echo "<td>$vietnamese_meaning</td>";
+                    echo "<td>$similar_words</td>";
+                    echo "<td>$example_one</td>";
+                    echo "<td>$example_two</td>";
+                    echo "<td><a type='button' class='btn btn-warning text-dark' href='update_a_word.php?id=$id'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_a_word_action.php?id=$id'>Delete</a></td>";
+                    echo "</tr>";
+                }
+            }
+            mysqli_close($conn);
         ?>
         </tbody>
     </table>

@@ -40,7 +40,7 @@ $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $e
             $_SESSION['example_two'] = $_POST['example_two'];
             header("Location: actions/add_a_word_action.php");
         }
-}
+    }
 ?>
 
 <!DOCTYPE html>

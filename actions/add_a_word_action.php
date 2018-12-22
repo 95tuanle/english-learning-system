@@ -1,21 +1,16 @@
 <?php
 session_start();
 
-$servername = 's3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com';
-$username = 'imhikarucat';
-$password = '12345abcde';
-$schema = 'tuanle';
-$port = 3306;
-
-$conn = mysqli_connect($servername, $username, $password, $schema);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "INSERT INTO words (word, vietnamese_meaning, similar_words, example_one, example_two) VALUES ('{$_SESSION['$username']}', '{$_SESSION['vietnamese_meaning']}', '{$_SESSION['similar_words']}', '{$_SESSION['example_one']}', '{$_SESSION['example_two']}')";
+$sql = "INSERT INTO words (word, vietnamese_meaning, similar_words, example_one, example_two)
+VALUES ('{$conn->real_escape_string($_SESSION['word'])}', '{$conn->real_escape_string($_SESSION['vietnamese_meaning'])}',
+'{$conn->real_escape_string($_SESSION['similar_words'])}', '{$conn->real_escape_string($_SESSION['example_one'])}', '{$conn->real_escape_string($_SESSION['example_two'])}')";
 
-$sql = "INSERT INTO words (word, vietnamese_meaning, similar_words, example_one, example_two) VALUES ('1', '1', '1', '1', '1')";
-
-mysqli_close($conn);
-
-header("Location: ../manage_words.php");
+if (mysqli_query($conn, $sql)) {
+    mysqli_close($conn);
+    header("Location: ../manage_words.php");
+}
