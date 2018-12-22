@@ -8,27 +8,27 @@ $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $e
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $count = 0;
         if (empty($_POST["word"])) {
-            $word_Err = "ID is required";
+            $word_Err = "Word is required";
         } else {
             $count += 1;
         }
         if (empty($_POST["vietnamese_meaning"])) {
-            $vietnamese_meaning_Err = "First name is required";
+            $vietnamese_meaning_Err = "Vietnamese meaning is required";
         } else {
             $count += 1;
         }
         if (empty($_POST["similar_words"])) {
-            $similar_words_Err = "Last name is required";
+            $similar_words_Err = "Similar words are required";
         } else {
             $count += 1;
         }
         if (empty($_POST["example_one"])) {
-            $example_one_Err = "Gender is required";
+            $example_one_Err = "Example 1 is required";
         } else {
             $count += 1;
         }
         if (empty($_POST["example_two"])) {
-            $example_two_Err = "Age is required";
+            $example_two_Err = "Example 2 is required";
         } else {
             $count += 1;
         }
@@ -69,11 +69,17 @@ $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $e
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
     <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="add_a_word.php">Add word</a>
+        <li class="nav-item active">
+            <a class="nav-link" href="add_a_word.php">Add a word</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="add_an_user.php">Add an user</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="manage_users.php">Manage users</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

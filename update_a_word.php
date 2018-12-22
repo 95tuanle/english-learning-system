@@ -5,7 +5,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>English Learning System</title>
+    <title>Update a Word</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -29,10 +29,16 @@ session_start();
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="add_a_word.php">Add word</a>
+            <a class="nav-link" href="add_a_word.php">Add a word</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="add_an_user.php">Add an user</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="manage_users.php">Manage users</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
@@ -40,13 +46,7 @@ session_start();
     </ul>
 </nav>
 <br>
-<!--<div class="container">-->
-<!--    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>-->
-<!--    <h1>Lecturer: Nguyen Ngoc Thanh</h1>-->
-<!--    <br>-->
-<!--    <p>Student name: Le Nguyen Anh Tuan</p>-->
-<!--    <p>Student ID: s3574983</p>-->
-<!--</div>-->
+
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
