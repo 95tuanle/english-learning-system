@@ -16,6 +16,11 @@ Technology stack:
 AWS EC2 hosting PHP running Docker container for the front end.
 AWS RDS using MySQL for the database.
 
+How to use:
+cd project-folder
+sudo docker build -t app-name .
+sudo docker run -d -p 90:80 app-name
+
 [Deployed Link](http://ec2-54-255-234-168.ap-southeast-1.compute.amazonaws.com:90)
 
 [GitHub](https://github.com/95tuanle/English-Learning-System)
