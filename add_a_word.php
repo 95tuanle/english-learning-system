@@ -1,7 +1,9 @@
 <?php
-
 session_start();
 
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+}
 
 $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $example_two_Err = "";
 
@@ -64,7 +66,7 @@ $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $e
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
@@ -76,11 +78,19 @@ $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $e
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="add_an_user.php">Add an user</a>
+            <?php
+            if ($_SESSION['is_admin_logged_in']) {
+                echo "<a class='nav-link' href='add_an_user.php'>Add an user</a>";
+            } else {
+                echo "<a class='nav-link' href='learn_a_word.php'>Learn a word</a>";
+            }
+            ?>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="manage_users.php">Manage users</a>
-        </li>
+        <?php
+        if ($_SESSION['is_admin_logged_in']) {
+            echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
+        }
+        ?>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
         </li>

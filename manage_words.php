@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +28,7 @@ session_start();
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
@@ -35,11 +40,19 @@ session_start();
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="add_an_user.php">Add an user</a>
+            <?php
+            if ($_SESSION['is_admin_logged_in']) {
+                echo "<a class='nav-link' href='add_an_user.php'>Add an user</a>";
+            } else {
+                echo "<a class='nav-link' href='learn_a_word.php'>Learn a word</a>";
+            }
+            ?>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="manage_users.php">Manage users</a>
-        </li>
+        <?php
+        if ($_SESSION['is_admin_logged_in']) {
+            echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
+        }
+        ?>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
         </li>
@@ -81,7 +94,9 @@ session_start();
                     echo "<td>$similar_words</td>";
                     echo "<td>$example_one</td>";
                     echo "<td>$example_two</td>";
-                    echo "<td><a type='button' class='btn btn-warning text-dark' href='update_a_word.php?id=$id'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_a_word_action.php?id=$id'>Delete</a></td>";
+                    if ($_SESSION['is_admin_logged_in']) {
+                        echo "<td><a type='button' class='btn btn-warning text-dark' href='update_a_word.php?id=$id'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_a_word_action.php?id=$id'>Delete</a></td>";
+                    }
                     echo "</tr>";
                 }
             }

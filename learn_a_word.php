@@ -1,14 +1,20 @@
 <?php
 session_start();
+
 if (!$_SESSION['is_logged_in']) {
     header("Location: login.php");
+} else {
+    if ($_SESSION['is_admin_logged_in']) {
+        header("Location: index.php");
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>English Learning System</title>
+    <title>Manage Words</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -37,33 +43,44 @@ if (!$_SESSION['is_logged_in']) {
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
-        <li class="nav-item">
-            <?php
-                if ($_SESSION['is_admin_logged_in']) {
-                    echo "<a class='nav-link' href='add_an_user.php'>Add an user</a>";
-                } else {
-                    echo "<a class='nav-link' href='learn_a_word.php'>Learn a word</a>";
-                }
-            ?>
+        <li class="nav-item active">
+            <a class="nav-link" href="learn_a_word.php">Learn a word</a>
         </li>
-            <?php
-                if ($_SESSION['is_admin_logged_in']) {
-                    echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
-                }
-            ?>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
         </li>
     </ul>
 </nav>
 <br>
-<div class="container">
-    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>
-    <h1>Lecturer: Nguyen Ngoc Thanh</h1>
-    <br>
-    <p>Student name: Le Nguyen Anh Tuan</p>
-    <p>Student ID: s3574983</p>
-</div>
+        <?php
+            $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            $sql = "SELECT * FROM words ORDER BY RAND() LIMIT 1";
+            $data = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($data) > 0) {
+                $row = mysqli_fetch_assoc($data);
+                $word = $row["word"];
+                $vietnamese_meaning = $row["vietnamese_meaning"];
+                $similar_words = $row["similar_words"];
+                $example_one = $row["example_one"];
+                $example_two = $row["example_two"];
+                echo "<div class='container'>";
+
+                echo "<h1>Word: $word</h1>";
+                echo "<br>";
+                echo "<p>Vietnamese meaning: $vietnamese_meaning</p>";
+                echo "<p>Similar words: $similar_words</p>";
+                echo "<p>Example 1: $example_one</p>";
+                echo "<p>Example 2: $example_two</p>";
+                echo "<a href='learn_a_word.php'>Learn another word</a>";
+                echo "</div>";
+            }
+            mysqli_close($conn);
+        ?>
+
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">

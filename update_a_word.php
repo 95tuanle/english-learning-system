@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+} else {
+    if (!$_SESSION['is_admin_logged_in']) {
+        header("Location: index.php");
+    }
+}
+
 $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $example_two_Err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -53,7 +61,7 @@ if($_GET['id'] != null) {
     $data = mysqli_query($conn, $sql);
     if (mysqli_num_rows($data) > 0) {
         $row = mysqli_fetch_assoc($data);
-        $_SESSION['id'] = $_GET['id'];
+        $_SESSION['id_update_word'] = $_GET['id'];
         $_SESSION["word"] = $_POST["word"] =  $row["word"];
         $_SESSION["vietnamese_meaning"] = $_POST["vietnamese_meaning"] = $row["vietnamese_meaning"];
         $_SESSION["similar_words"] = $_POST["similar_words"] = $row["similar_words"];
@@ -92,7 +100,7 @@ if($_GET['id'] != null) {
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>

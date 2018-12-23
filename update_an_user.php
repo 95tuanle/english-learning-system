@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+} else {
+    if (!$_SESSION['is_admin_logged_in']) {
+        header("Location: index.php");
+    }
+}
+
 $username_Err = $email_Err = $is_admin_Err = $password_Err = $confirm_password_Err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,14 +17,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_Err = "Username is required";
         $_SESSION['username'] = $_POST['username'];
     } else {
-        $count += 1;
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM users WHERE username='".$_POST["username"]."'";
+        $data = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($data) > 0) {
+            $row = mysqli_fetch_assoc($data);
+            if ($row['id'] == $_SESSION['id_update_user']) {
+                $count += 1;
+            } else {
+                $username_Err = "Username already exists";
+            }
+        } else {
+            $count += 1;
+        }
+        mysqli_close($conn);
         $_SESSION['username'] = $_POST['username'];
     }
     if (empty($_POST["email"])) {
         $email_Err = "Email is required";
         $_SESSION['email'] = $_POST['email'];
     } else {
-        $count += 1;
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM users WHERE email='".$_POST["email"]."'";
+        $data = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($data) > 0) {
+            $row = mysqli_fetch_assoc($data);
+            if ($row['id'] == $_SESSION['id_update_user']) {
+                $count += 1;
+            } else {
+                $email_Err = "Email already exists";
+            }
+        } else {
+            $count += 1;
+        }
+        mysqli_close($conn);
         $_SESSION['email'] = $_POST['email'];
     }
     if (empty($_POST["is_admin"])) {
@@ -50,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'cost' => 12,
         ];
         $_SESSION['password'] = password_hash($_SESSION['password'], PASSWORD_BCRYPT, $options);
+        unset($_SESSION["confirm_password"]);
         header("Location: actions/update_an_user_action.php");
     }
 }
@@ -62,7 +103,7 @@ if($_GET['id'] != null) {
     $data = mysqli_query($conn, $sql);
     if (mysqli_num_rows($data) > 0) {
         $row = mysqli_fetch_assoc($data);
-        $_SESSION['id'] = $_GET['id'];
+        $_SESSION['id_update_user'] = $_GET['id'];
         $_SESSION["username"] = $_POST["username"] =  $row["username"];
         $_SESSION["email"] = $_POST["email"] = $row["email"];
         $_SESSION["is_admin"] = $_POST["is_admin"] = $row["is_admin"];
@@ -98,7 +139,7 @@ if($_GET['id'] != null) {
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>

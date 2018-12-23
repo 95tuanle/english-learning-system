@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+} else {
+    if (!$_SESSION['is_admin_logged_in']) {
+        header("Location: index.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +31,7 @@ session_start();
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>

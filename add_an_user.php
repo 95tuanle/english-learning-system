@@ -1,5 +1,14 @@
 <?php
 session_start();
+
+if (!$_SESSION['is_logged_in']) {
+    header("Location: login.php");
+} else {
+    if (!$_SESSION['is_admin_logged_in']) {
+        header("Location: index.php");
+    }
+}
+
 $username_Err = $email_Err = $is_admin_Err = $password_Err = $confirm_password_Err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -7,12 +16,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["username"])) {
         $username_Err = "Username is required";
     } else {
-        $count += 1;
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM users WHERE username='".$_POST["username"]."'";
+        $data = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($data) > 0) {
+            $username_Err = "Username already exists";
+        } else {
+            $count += 1;
+        }
+        mysqli_close($conn);
     }
     if (empty($_POST["email"])) {
         $email_Err = "Email is required";
     } else {
-        $count += 1;
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM users WHERE email='".$_POST["email"]."'";
+        $data = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($data) > 0) {
+            $email_Err = "Email already exists";
+        } else {
+            $count += 1;
+        }
+        mysqli_close($conn);
     }
     if (empty($_POST["is_admin"])) {
         $is_admin_Err = "Is admin is required";
@@ -68,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <div class="jumpotron-fluid">
-    <img src="assets/banner.png" class="img-fluid">
+    <img src="assets/banner.png" class="img-fluid" alt="">
 </div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
