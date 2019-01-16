@@ -31,9 +31,11 @@ if (!$_SESSION['is_logged_in']) {
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
     <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="add_a_word.php">Add a word</a>
-        </li>
+        <?php
+            if ($_SESSION['is_admin_logged_in']) {
+                echo "<li class='nav-item'><a class='nav-link' href='add_a_word.php'>Add a word</a></li>";
+            }
+        ?>
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
@@ -42,7 +44,7 @@ if (!$_SESSION['is_logged_in']) {
                 if ($_SESSION['is_admin_logged_in']) {
                     echo "<a class='nav-link' href='add_an_user.php'>Add an user</a>";
                 } else {
-                    echo "<a class='nav-link' href='learn_a_word.php'>Learn a word</a>";
+                    echo "<a class='nav-link' href='learn_a_random_word.php'>Learn a random word</a>";
                 }
             ?>
         </li>
@@ -58,16 +60,15 @@ if (!$_SESSION['is_logged_in']) {
 </nav>
 <br>
 <div class="container">
-    <h1 class="display-4">Assignment 2 - Build a scalable app on Clouds</h1>
+    <h1 class="display-4">Assignment 2 & 3 - Build a scalable & full-stack app on Clouds</h1>
     <h1>Lecturer: Nguyen Ngoc Thanh</h1>
     <br>
-    <p>Student name: Le Nguyen Anh Tuan</p>
-    <p>Student ID: s3574983</p>
+    <p>Student name & ID: Le Nguyen Anh Tuan (s3574983), Do Quoc Toan (s3652979)</p>
 </div>
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
-    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le</p>
+    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le & Toan Do</p>
 </div>
 </body>
 </html>

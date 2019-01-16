@@ -38,13 +38,10 @@ if (!$_SESSION['is_logged_in']) {
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="add_a_word.php">Add a word</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="learn_a_word.php">Learn a word</a>
+            <a class="nav-link" href="learn_a_random_word.php">Learn a random word</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
@@ -75,7 +72,7 @@ if (!$_SESSION['is_logged_in']) {
                 echo "<p>Similar words: $similar_words</p>";
                 echo "<p>Example 1: $example_one</p>";
                 echo "<p>Example 2: $example_two</p>";
-                echo "<a href='learn_a_word.php'>Learn another word</a>";
+                echo "<a href='learn_a_random_word.php'>Learn another word</a>";
                 echo "</div>";
             }
             mysqli_close($conn);
@@ -84,7 +81,7 @@ if (!$_SESSION['is_logged_in']) {
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
-    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le</p>
+    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le & Toan Do</p>
 </div>
 </body>
 </html>

@@ -1,8 +1,7 @@
-# Assignment 2 & 3 - Build a scalable app on Clouds & Build a full-stack app on Clouds
+# Assignment 2 & 3 - Build a scalable & full-stack app on Clouds
 Lecturer: Nguyen Ngoc Thanh
 
-Student name: Le Nguyen Anh Tuan (s3574983) , Do Quoc Toan (s3652979)
-
+Student name & ID: Le Nguyen Anh Tuan (s3574983), Do Quoc Toan (s3652979)
 
 Summary: This assignment has accomplished some of the requirements which are settings admin and learner permissions.
 For admin permission, an admin is able to CRUD words list and users list, in users list, an admin can CRUD the permission for
@@ -15,8 +14,6 @@ Technology stack:
 AWS EC2 hosting PHP running Docker container for the front end.
 AWS RDS using MySQL for the database.
 
-
-
 How to use:
 
 cd project-folder
@@ -24,7 +21,6 @@ cd project-folder
 sudo docker build -t app-name .
 
 sudo docker run -d -p 90:80 app-name
-
 
 
 [Deployed Link](http://ec2-54-255-234-168.ap-southeast-1.compute.amazonaws.com:90)

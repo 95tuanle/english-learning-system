@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
-    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le</p>
+    <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le & Toan Do</p>
 </div>
 </body>
 </html>
