@@ -1,15 +1,17 @@
 <?php
-session_start();
+    session_start();
 
-if (!$_SESSION['is_logged_in']) {
-    header("Location: login.php");
-} else {
-    if (!$_SESSION['is_admin_logged_in']) {
-        header("Location: index.php");
+    if (!$_SESSION['is_logged_in']) {
+        header("Location: login.php");
+        exit();
+    } else {
+        if (!$_SESSION['is_admin_logged_in']) {
+            header("Location: index.php");
+            exit();
+        }
     }
-}
 
-$word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $example_two_Err = "";
+    $word_Err = $vietnamese_meaning_Err = $similar_words_Err = $example_one_Err = $example_two_Err = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $count = 0;

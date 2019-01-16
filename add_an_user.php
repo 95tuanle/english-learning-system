@@ -3,9 +3,11 @@ session_start();
 
 if (!$_SESSION['is_logged_in']) {
     header("Location: login.php");
+    exit();
 } else {
     if (!$_SESSION['is_admin_logged_in']) {
         header("Location: index.php");
+        exit();
     }
 }
 
@@ -132,13 +134,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input placeholder="Email" class="form-control" type="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
             <span class="error">* <?php echo $email_Err;?></span>
         </div>
-        <div class="form-check">
-            <input type="radio" name="is_admin" value="admin" <?php if ($_POST['is_admin']=="admin") {echo "checked";} ?> id="admin">
-            <label for="admin">Admin</label>
-            <input type="radio" name="is_admin" value="learner" <?php if ($_POST['is_admin']=="learner") {echo "checked";} ?> id="learner">
-            <label for="learner">Learner</label>
-            <span class="error">* <?php echo $is_admin_Err;?></span>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" name="is_admin" value="admin" <?php if ($_POST['is_admin']=="admin") {echo "checked";} ?> id="admin" class="custom-control-input">
+            <label class="custom-control-label" for="admin">Admin</label>
         </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" name="is_admin" value="learner" <?php if ($_POST['is_admin']=="learner") {echo "checked";} ?> id="learner" class="custom-control-input">
+            <label class="custom-control-label" for="learner">Learner</label>
+        </div>
+            <span class="error">* <?php echo $is_admin_Err;?></span>
         <div class="form-group">
             <input placeholder="Password" class="form-control" type="password" name="password" value="<?php echo isset($_POST['password']) ? $_POST['password'] : '' ?>">
             <span class="error">* <?php echo $password_Err;?></span>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if ($_SESSION['is_logged_in']) {
-    header("Location: ../index.php");
+if (!$_SESSION['is_logged_in']) {
+    header("Location: ../login.php");
 } else {
     if (empty($_SESSION['username_register']) || empty($_SESSION['email_register']) || empty($_SESSION['password_register'])) {
         header("Location: ../register.php");
@@ -23,7 +23,6 @@ VALUES ('{$conn->real_escape_string($_SESSION['username_register'])}', '{$conn->
             header("Location: ../login.php");
         }
     }
-
 }
 
 

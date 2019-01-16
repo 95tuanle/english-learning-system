@@ -3,6 +3,7 @@ session_start();
 
 if ($_SESSION['is_logged_in']) {
     header("Location: index.php");
+    exit();
 }
 
 $username_register_Err = $email_register_Err = $password_Err = $confirm_password_register_Err = "";
@@ -71,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add an User</title>
+    <title>Register</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
