@@ -66,20 +66,20 @@ if ($_SESSION["learning_sequentially"]) {
                 die("Connection failed: " . mysqli_connect_error());
             }
             if ($_SESSION["learning_randomly"]) {
-                $sql = "SELECT * FROM words  WHERE id='".$_SESSION['learning_word_id']."'";
+                $sql = "SELECT * FROM words  WHERE id='".$_SESSION['learning_word']["id"]."'";
             } else {
                 $sql = "SELECT * FROM words ORDER BY RAND() LIMIT 1";
             }
 
             $data = mysqli_query($conn, $sql);
             if (mysqli_num_rows($data) > 0) {
-                $row = mysqli_fetch_assoc($data);
-                $_SESSION['learning_word_id'] = $id = $row["id"];
-                $word = $row["word"];
-                $vietnamese_meaning = $row["vietnamese_meaning"];
-                $similar_words = $row["similar_words"];
-                $example_one = $row["example_one"];
-                $example_two = $row["example_two"];
+                $_SESSION['learning_word'] = mysqli_fetch_assoc($data);
+                $_SESSION['learning_word']["id"] = $_SESSION['learning_word']["id"];
+                $word = $_SESSION['learning_word']["word"];
+                $vietnamese_meaning = $_SESSION['learning_word']["vietnamese_meaning"];
+                $similar_words = $_SESSION['learning_word']["similar_words"];
+                $example_one = $_SESSION['learning_word']["example_one"];
+                $example_two = $_SESSION['learning_word']["example_two"];
                 echo "<div class='container'>";
                 if (isset($_SESSION['message_for_learning_mode'])) {
                     echo "<div class=\"alert alert-danger\">{$_SESSION['message_for_learning_mode']}</div>";
@@ -91,11 +91,11 @@ if ($_SESSION["learning_sequentially"]) {
                 echo "<p>Similar words: $similar_words</p>";
                 echo "<p>Example 1: $example_one</p>";
                 echo "<p>Example 2: $example_two</p>";
-                echo "<a href='do_a_mini_quiz.php?id=$id'>Do a mini quiz</a>";
+                echo "<a href='do_a_mini_quiz.php'>Do a mini quiz</a>";
                 echo "</div>";
                 $_SESSION['learning_randomly'] = true;
                 $_SESSION['learning_sequentially'] = false;
-                $_SESSION['message_for_learning_mode'] = "You have to complete learning this word";
+                $_SESSION['message_for_learning_mode'] = "You have to complete learning this word in order to learn another word!";
             }
             mysqli_close($conn);
         ?>

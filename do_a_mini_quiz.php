@@ -16,7 +16,6 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST["answer"])) {
             $answer_Err = "You need to pick an answer";
-            $_GET['id'] = $_SESSION['word_id_for_quiz'];
         } else {
             if ($_POST['answer'] == $_SESSION['vietnamese_meaning_for_quiz']) {
                 $_SESSION['time_ended'] = microtime(true);
@@ -25,12 +24,11 @@
                 exit();
             } else {
                 $_SESSION['message'] = "Incorrect, try again!";
-                $_GET['id'] = $_SESSION['word_id_for_quiz'];
             }
         }
     }
 
-    if ($_GET['id'] == null) {
+    if ($_SESSION['learning_word']["id"] == null) {
         header("Location: index.php");
     } else {
         $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
@@ -38,16 +36,14 @@
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        $sql = "SELECT * FROM words WHERE id='".$_GET['id']."'";
+        $sql = "SELECT * FROM words WHERE id='".$_SESSION['learning_word']["id"]."'";
         $data = mysqli_query($conn, $sql);
         if (mysqli_num_rows($data) > 0) {
-            $row = mysqli_fetch_assoc($data);
-            $_SESSION['word_id_for_quiz'] = $id = $row["id"];
-            $word = $row["word"];
-            $_SESSION['vietnamese_meaning_for_quiz'] = $row["vietnamese_meaning"];
+            $_SESSION['learning_word'] = mysqli_fetch_assoc($data);
+            $_SESSION['vietnamese_meaning_for_quiz'] = $_SESSION['learning_word']["vietnamese_meaning"];
             $answers = array();
             array_push($answers, $_SESSION['vietnamese_meaning_for_quiz']);
-            $sql = "SELECT * FROM words WHERE NOT id=$id ORDER BY RAND() LIMIT 3";
+            $sql = "SELECT * FROM words WHERE NOT id='".$_SESSION['learning_word']["id"]."' ORDER BY RAND() LIMIT 3";
             $data = mysqli_query($conn, $sql);
             if (mysqli_num_rows($data) > 0) {
                 while($row = mysqli_fetch_assoc($data)) {
@@ -111,7 +107,7 @@
             unset($_SESSION['message']);
         }
     ?>
-    <h3>What is the Vietnamese meaning of "<?php echo $word?>"?</h3>
+    <h3>What is the Vietnamese meaning of "<?php echo $_SESSION['learning_word']["word"]?>"?</h3>
     <form action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> " method="post">
         <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" name="answer" value="<?php echo $answers[0]?>" <?php if ($_POST['answer']==$answers[0]) {echo "checked";} ?> id="<?php echo $answers[0]?>" class="custom-control-input">
