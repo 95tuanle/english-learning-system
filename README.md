@@ -1,9 +1,8 @@
-# Assignment 2 - Build a scalable app on Clouds
+# Assignment 2 & 3 - Build a scalable app on Clouds & Build a full-stack app on Clouds
 Lecturer: Nguyen Ngoc Thanh
 
-Student name: Le Nguyen Anh Tuan
+Student name: Le Nguyen Anh Tuan (s3574983) , Do Quoc Toan (s3652979)
 
-Student ID: s3574983
 
 Summary: This assignment has accomplished some of the requirements which are settings admin and learner permissions.
 For admin permission, an admin is able to CRUD words list and users list, in users list, an admin can CRUD the permission for
