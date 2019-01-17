@@ -30,6 +30,7 @@
 
     if ($_SESSION['learning_word']["id"] == null) {
         header("Location: index.php");
+        exit();
     } else {
         $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
         if (!$conn) {
@@ -52,6 +53,7 @@
             }
             if (sizeof($answers) < 4) {
                 header("Location: do_a_mini_quiz.php?id=$id");
+                exit();
             } else {
                 shuffle($answers);
             }
@@ -92,6 +94,12 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="learn_a_random_word.php">Learn a random word</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="learn_a_sequence_word.php">Learn a sequence word</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

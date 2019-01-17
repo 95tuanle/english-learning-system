@@ -3,9 +3,11 @@ session_start();
 
 if (!$_SESSION['is_logged_in']) {
     header("Location: ../login.php");
+    exit();
 } else {
     if (empty($_SESSION['username_register']) || empty($_SESSION['email_register']) || empty($_SESSION['password_register'])) {
         header("Location: ../register.php");
+        exit();
     } else {
         $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
         if (!$conn) {
@@ -21,6 +23,7 @@ VALUES ('{$conn->real_escape_string($_SESSION['username_register'])}', '{$conn->
             unset($_SESSION['email_register']);
             unset($_SESSION['password_register']);
             header("Location: ../login.php");
+            exit();
         }
     }
 }

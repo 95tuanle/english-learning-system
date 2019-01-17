@@ -4,11 +4,6 @@ session_start();
 if (!$_SESSION['is_logged_in']) {
     header("Location: login.php");
     exit();
-} else {
-    if (!$_SESSION['is_admin_logged_in']) {
-        header("Location: index.php");
-        exit();
-    }
 }
 
 ?>
@@ -57,10 +52,15 @@ if (!$_SESSION['is_logged_in']) {
             ?>
         </li>
         <?php
-        if ($_SESSION['is_admin_logged_in']) {
-            echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
-        }
+            if ($_SESSION['is_admin_logged_in']) {
+                echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
+            } else {
+                echo "<li class='nav-item'><a class='nav-link' href='learn_a_sequence_word.php'>Learn a sequence word</a></li>";
+            }
         ?>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>
         </li>

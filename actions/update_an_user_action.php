@@ -3,12 +3,15 @@ session_start();
 
 if (!$_SESSION['is_logged_in']) {
     header("Location: ../login.php");
+    exit();
 } else {
     if (!$_SESSION['is_admin_logged_in']) {
         header("Location: ../index.php");
+        exit();
     } else {
         if (empty($_SESSION['id_update_user'])) {
             header("Location: ../manage_users.php");
+            exit();
         } else {
             $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
             if (!$conn) {
@@ -26,6 +29,7 @@ is_admin = '{$conn->real_escape_string($_SESSION['is_admin'])}', password = '{$c
                 unset($_SESSION['is_admin']);
                 unset($_SESSION['password']);
                 header("Location: ../manage_users.php");
+                exit();
             }
         }
     }

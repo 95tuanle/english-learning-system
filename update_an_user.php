@@ -94,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['password'] = password_hash($_SESSION['password'], PASSWORD_BCRYPT, $options);
         unset($_SESSION["confirm_password"]);
         header("Location: actions/update_an_user_action.php");
+        exit();
     }
 }
 if($_GET['id'] != null) {
@@ -157,6 +158,9 @@ if($_GET['id'] != null) {
         </li>
         <li class="nav-item">
             <a class="nav-link" href="manage_users.php">Manage users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

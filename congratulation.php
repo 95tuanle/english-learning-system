@@ -10,8 +10,6 @@ if (!$_SESSION['is_logged_in']) {
         exit();
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +43,12 @@ if (!$_SESSION['is_logged_in']) {
         </li>
         <li class="nav-item">
             <a class="nav-link" href="learn_a_random_word.php">Learn a random word</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="learn_a_sequence_word.php">Learn a sequence word</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

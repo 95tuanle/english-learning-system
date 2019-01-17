@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
         $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
         header("Location: actions/add_an_user_action.php");
+        exit();
     }
 }
 ?>
@@ -117,6 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </li>
         <li class="nav-item">
             <a class="nav-link" href="manage_users.php">Manage users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

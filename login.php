@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 mysqli_close($conn);
                 header("Location: index.php");
+                exit();
             } else {
                 $username_login_Err = "Invalid username or password";
                 $password_login_Err = "Invalid username or password";

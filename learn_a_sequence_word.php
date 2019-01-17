@@ -10,8 +10,8 @@ if (!$_SESSION['is_logged_in']) {
         exit();
     }
 }
-if ($_SESSION['learning_sequentially']) {
-    header("Location: learn_a_sequence_word.php");
+if ($_SESSION['learning_randomly']) {
+    header("Location: learn_a_random_word.php");
     exit();
 } else {
     if (!$_SESSION['is_timing']) {
@@ -26,7 +26,7 @@ if ($_SESSION['learning_sequentially']) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Learn a Random Word</title>
+    <title>Learn a Sequence Word</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -52,10 +52,10 @@ if ($_SESSION['learning_sequentially']) {
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="learn_a_random_word.php">Learn a random word</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="learn_a_sequence_word.php">Learn a sequence word</a>
         </li>
         <li class="nav-item">
@@ -66,18 +66,14 @@ if ($_SESSION['learning_sequentially']) {
         </li>
     </ul>
 </nav>
-    <br>
-        <?php
-            $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
-            if ($_SESSION['learning_randomly']) {
-                $sql = "SELECT * FROM words  WHERE id='".$_SESSION['learning_word']["id"]."'";
-            } else {
-                $sql = "SELECT * FROM words ORDER BY RAND() LIMIT 1";
-            }
-
+<br>
+    <?php
+        $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        if ($_SESSION['learning_sequentially']) {
+            $sql = "SELECT * FROM words  WHERE id='".$_SESSION['learning_word']["id"]."'";
             $data = mysqli_query($conn, $sql);
             if (mysqli_num_rows($data) > 0) {
                 $_SESSION['learning_word'] = mysqli_fetch_assoc($data);
@@ -99,13 +95,61 @@ if ($_SESSION['learning_sequentially']) {
                 echo "<p>Example 2: $example_two</p>";
                 echo "<a href='do_a_mini_quiz.php'>Do a mini quiz</a>";
                 echo "</div>";
-                $_SESSION['learning_randomly'] = true;
-                $_SESSION['learning_sequentially'] = false;
+                $_SESSION['learning_randomly'] = false;
+                $_SESSION['learning_sequentially'] = true;
                 $_SESSION['message_for_learning_mode'] = "You have to complete learning this word in order to learn another word!";
             }
-            mysqli_close($conn);
-        ?>
-    <br>
+        } else {
+            if (isset($_SESSION['previous_learned_id'])) {
+                $sql = "SELECT COUNT(id) AS number_of_rows FROM words;";
+                $data = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($data) > 0) {
+                    $_SESSION['number_of_rows'] = mysqli_fetch_assoc($data);
+                    if ($_SESSION['previous_learned_id'] < $_SESSION['number_of_rows']['number_of_rows']-1) {
+                        $_SESSION['previous_learned_id'] += 1;
+                    } else {
+                        $_SESSION['previous_learned_id'] = 0;
+                    }
+                }
+            } else {
+                $_SESSION['previous_learned_id'] = 0;
+            }
+            $sql = "SELECT * FROM words";
+            $data = mysqli_query($conn, $sql);
+            $words = array();
+            if (mysqli_num_rows($data) > 0) {
+                while($row = mysqli_fetch_assoc($data)) {
+                    array_push($words, $row);
+                }
+            }
+            $_SESSION['learning_word'] = $words[$_SESSION['previous_learned_id']];
+            $word = $_SESSION['learning_word']["word"];
+            $vietnamese_meaning = $_SESSION['learning_word']["vietnamese_meaning"];
+            $similar_words = $_SESSION['learning_word']["similar_words"];
+            $example_one = $_SESSION['learning_word']["example_one"];
+            $example_two = $_SESSION['learning_word']["example_two"];
+            echo "<div class='container'>";
+            if (isset($_SESSION['message_for_learning_mode'])) {
+                echo "<div class=\"alert alert-warning\">{$_SESSION['message_for_learning_mode']}</div>";
+                unset($_SESSION['message_for_learning_mode']);
+            }
+            echo "<h1>Word: $word</h1>";
+            echo "<br>";
+            echo "<p>Vietnamese meaning: $vietnamese_meaning</p>";
+            echo "<p>Similar words: $similar_words</p>";
+            echo "<p>Example 1: $example_one</p>";
+            echo "<p>Example 2: $example_two</p>";
+            echo "<a href='do_a_mini_quiz.php'>Do a mini quiz</a>";
+            echo "</div>";
+            $_SESSION['learning_randomly'] = false;
+            $_SESSION['learning_sequentially'] = true;
+            $_SESSION['message_for_learning_mode'] = "You have to complete learning this word in order to learn another word!";
+        }
+
+
+        mysqli_close($conn);
+    ?>
+<br>
 <footer class="page-footer font-small lighten-5"">
 <div class="footer-copyright text-center text-black-50 py-3">
     <p>Copyright &copy; <?php echo date('Y') ?> Tuan Le & Toan Do</p>

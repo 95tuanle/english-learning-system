@@ -47,6 +47,7 @@
             $_SESSION['example_one'] = $_POST['example_one'];
             $_SESSION['example_two'] = $_POST['example_two'];
             header("Location: actions/add_a_word_action.php");
+            exit();
         }
     }
 ?>
@@ -88,6 +89,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="manage_users.php">Manage users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="logout.php">Sign out</a>

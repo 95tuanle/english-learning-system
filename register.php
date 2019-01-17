@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
         $_SESSION['password_register'] = password_hash($_POST['password_register'], PASSWORD_BCRYPT, $options);
         header("Location: actions/register_an_user_action.php");
+        exit();
     }
 }
 ?>

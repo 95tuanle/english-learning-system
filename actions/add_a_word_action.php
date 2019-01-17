@@ -3,12 +3,15 @@ session_start();
 
 if (!$_SESSION['is_logged_in']) {
     header("Location: ../login.php");
+    exit();
 } else {
     if (!$_SESSION['is_admin_logged_in']) {
         header("Location: ../index.php");
+        exit();
     } else {
         if (empty($_SESSION['word']) || empty($_SESSION['vietnamese_meaning']) || empty($_SESSION['similar_words']) || empty($_SESSION['example_one']) || empty($_SESSION['example_two'])) {
             header("Location: ../add_a_word.php");
+            exit();
         } else {
             $conn = mysqli_connect("s3618861-db.cavq78vobfpn.ap-southeast-1.rds.amazonaws.com", "imhikarucat", "12345abcde", "tuanle");
             if (!$conn) {
@@ -27,6 +30,7 @@ VALUES ('{$conn->real_escape_string($_SESSION['word'])}', '{$conn->real_escape_s
                 unset($_SESSION['example_one']);
                 unset($_SESSION['example_two']);
                 header("Location: ../manage_words.php");
+                exit();
             }
         }
     }

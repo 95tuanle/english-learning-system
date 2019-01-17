@@ -1,21 +1,15 @@
 <?php
 session_start();
-
 if (!$_SESSION['is_logged_in']) {
     header("Location: login.php");
     exit();
-} else {
-    if (!$_SESSION['is_admin_logged_in']) {
-        header("Location: index.php");
-        exit();
-    }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Manage Users</title>
+    <title>Achievements</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -38,19 +32,31 @@ if (!$_SESSION['is_logged_in']) {
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top justify-content-center">
     <a class="navbar-brand" href="index.php"><img src="assets/logo.png" width="30" height="30" alt=""></a>
     <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="add_a_word.php">Add a word</a>
-        </li>
+        <?php
+        if ($_SESSION['is_admin_logged_in']) {
+            echo "<li class='nav-item'><a class='nav-link' href='add_a_word.php'>Add a word</a></li>";
+        }
+        ?>
         <li class="nav-item">
             <a class="nav-link" href="manage_words.php">Manage words</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="add_an_user.php">Add an user</a>
+            <?php
+            if ($_SESSION['is_admin_logged_in']) {
+                echo "<a class='nav-link' href='add_an_user.php'>Add an user</a>";
+            } else {
+                echo "<a class='nav-link' href='learn_a_random_word.php'>Learn a random word</a>";
+            }
+            ?>
         </li>
+        <?php
+        if ($_SESSION['is_admin_logged_in']) {
+            echo "<li class='nav-item'><a class='nav-link' href='manage_users.php'>Manage users</a></li>";
+        } else {
+            echo "<li class='nav-item'><a class='nav-link' href='learn_a_sequence_word.php'>Learn a sequence word</a></li>";
+        }
+        ?>
         <li class="nav-item active">
-            <a class="nav-link" href="manage_users.php">Manage users</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="view_records.php">Achievements</a>
         </li>
         <li class="nav-item">
@@ -60,13 +66,19 @@ if (!$_SESSION['is_logged_in']) {
 </nav>
 <br>
 <div class="container text-dark">
-    <h2>Users</h2>
+    <h2>Achievements</h2>
     <table class="table">
         <thead>
         <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Is admin</th>
+            <?php
+                if ($_SESSION['is_admin_logged_in']) {
+                    echo "<th>Learner ID</th>";
+                }
+            ?>
+            <th>Word ID</th>
+            <th>Time started</th>
+            <th>Time ended</th>
+            <th>Total time spent</th>
         </tr>
         </thead>
         <tbody>
@@ -76,21 +88,35 @@ if (!$_SESSION['is_logged_in']) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        $sql = "SELECT * FROM users";
+        if ($_SESSION['is_admin_logged_in']) {
+            $sql = "SELECT * FROM records";
+        } else {
+            $sql = "SELECT * FROM records WHERE learner_id='".$_SESSION['user_id']."'";
+
+        }
         $data = mysqli_query($conn, $sql);
         if (mysqli_num_rows($data) > 0) {
             while($row = mysqli_fetch_assoc($data)) {
-                $id = $row["id"];
-                $username = $row["username"];
-                $email = $row["email"];
-                $is_admin = $row["is_admin"];
+                $learner_id = $row["learner_id"];
+                $word_id = $row["word_id"];
+                $time_started = $row["time_started"];
+                $time_ended = $row["time_ended"];
+                $total_time_spent = $row["total_time_spent"];
                 echo "<tr>";
-                echo "<td>$username</td>";
-                echo "<td>$email</td>";
-                echo "<td>$is_admin</td>";
-                echo "<td><a type='button' class='btn btn-warning text-dark' href='update_an_user.php?id=$id'>Update</a><a type='button' class='btn btn-danger text-dark' href='actions/delete_an_user_action.php?id=$id'>Delete</a></td>";
+                if ($_SESSION['is_admin_logged_in']) {
+                    echo "<td>$learner_id</td>";
+                }
+                echo "<td>$word_id</td>";
+                $time_started = date("d-M-Y h:i:s",$time_started);
+                echo "<td>$time_started</td>";
+                $time_ended = date("d-M-Y h:i:s",$time_ended);
+                echo "<td>$time_ended</td>";
+                $total_time_spent = date("i:s",$total_time_spent);
+                echo "<td>$total_time_spent</td>";
                 echo "</tr>";
             }
+        } else {
+            echo "You have no achievement";
         }
         mysqli_close($conn);
         ?>
