@@ -9,9 +9,13 @@ every users. For learner permission, a leaner is able to register for an account
 learn random new words, and add words to words list. (Admin username: admin, password: admin || Learner username: tuanle, password: tuanle).
 There are security functions in every files of this web application to deny any unauthorized access.
 There are functions for checking the duplicate username and email and checking users' input.
+In addition to assignment 3, learning new words sequentially function has been added to the application.
+In order to switch between the two modes, learners/users have to finish the quiz before switching, without finished,
+the application will force them learn the word all over again. Furthermore, the application is able to record sessions of learning,
+and those records will be save every time they finished a word. Learners can view their owned records, while admins can view everyone's records.
 
 Technology stack:
-AWS EC2 hosting PHP running Docker container for the front end.
+AWS EC2 hosting PHP running on Docker container for the front end.
 AWS RDS using MySQL for the database.
 
 How to use:

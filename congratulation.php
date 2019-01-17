@@ -15,7 +15,7 @@ if (!$_SESSION['is_logged_in']) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Do a Mini Quiz</title>
+    <title>Congratulation</title>
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
