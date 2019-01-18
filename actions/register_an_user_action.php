@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (!$_SESSION['is_logged_in']) {
-    header("Location: ../login.php");
+if ($_SESSION['is_logged_in']) {
+    header("Location: ../index.php");
     exit();
 } else {
     if (empty($_SESSION['username_register']) || empty($_SESSION['email_register']) || empty($_SESSION['password_register'])) {
