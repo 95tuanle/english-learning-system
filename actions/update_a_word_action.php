@@ -20,7 +20,7 @@ if (!$_SESSION['is_logged_in']) {
             $sql = "UPDATE words SET word = '{$conn->real_escape_string($_SESSION['word'])}', 
 vietnamese_meaning = '{$conn->real_escape_string($_SESSION['vietnamese_meaning'])}', 
 similar_words = '{$conn->real_escape_string($_SESSION['similar_words'])}', example_one = '{$conn->real_escape_string($_SESSION['example_one'])}', 
-example_two = '{$conn->real_escape_string($_SESSION['example_two'])}' WHERE id='".$_SESSION['id_update_word']."'";
+example_two = '{$conn->real_escape_string($_SESSION['example_two'])}' WHERE id='" . $_SESSION['id_update_word'] . "'";
 
             if (mysqli_query($conn, $sql)) {
                 mysqli_close($conn);

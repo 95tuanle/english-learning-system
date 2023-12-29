@@ -17,7 +17,7 @@ if (!$_SESSION['is_logged_in']) {
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
-            $sql = "DELETE FROM words WHERE id='".$_GET['id']."'";
+            $sql = "DELETE FROM words WHERE id='" . $_GET['id'] . "'";
             if (mysqli_query($conn, $sql)) {
                 mysqli_close($conn);
                 header("Location: ../manage_words.php");

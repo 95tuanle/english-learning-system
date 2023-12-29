@@ -19,7 +19,7 @@ if (!$_SESSION['is_logged_in']) {
             }
 
             $sql = "UPDATE users SET username = '{$conn->real_escape_string($_SESSION['username'])}', email = '{$conn->real_escape_string($_SESSION['email'])}', 
-is_admin = '{$conn->real_escape_string($_SESSION['is_admin'])}', password = '{$conn->real_escape_string($_SESSION['password'])}' WHERE id='".$_SESSION['id_update_user']."'";
+is_admin = '{$conn->real_escape_string($_SESSION['is_admin'])}', password = '{$conn->real_escape_string($_SESSION['password'])}' WHERE id='" . $_SESSION['id_update_user'] . "'";
 
             if (mysqli_query($conn, $sql)) {
                 mysqli_close($conn);

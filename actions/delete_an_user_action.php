@@ -18,7 +18,7 @@ if (!$_SESSION['is_logged_in']) {
                 die("Connection failed: " . mysqli_connect_error());
             }
 
-            $sql = "DELETE FROM users WHERE id='".$_GET['id']."'";
+            $sql = "DELETE FROM users WHERE id='" . $_GET['id'] . "'";
 
             if (mysqli_query($conn, $sql)) {
                 mysqli_close($conn);
